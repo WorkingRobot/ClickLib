@@ -98,7 +98,7 @@ public abstract unsafe partial class ClickBase<TImpl, TStruct> : ClickBase<TImpl
     /// <param name="type">Event type.</param>
     protected void ClickAddonStage(uint which, EventType type = EventType.MOUSE_CLICK)
     {
-        var target = AtkStage.GetSingleton();
+        var target = AtkStage.Instance();
 
         var eventData = EventData.ForNormalTarget(target, this.UnitBase);
         var inputData = InputData.Empty();
@@ -156,7 +156,7 @@ public abstract unsafe partial class ClickBase<TImpl, TStruct> : ClickBase<TImpl
 
     private ReceiveEventDelegate GetReceiveEvent(AtkEventListener* listener)
     {
-        var receiveEventAddress = new IntPtr(listener->vfunc[2]);
+        var receiveEventAddress = new IntPtr(listener->VirtualTable->ReceiveEvent);
         return Marshal.GetDelegateForFunctionPointer<ReceiveEventDelegate>(receiveEventAddress)!;
     }
 
