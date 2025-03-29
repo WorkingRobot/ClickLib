@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using ClickLib.Exceptions;
 using ClickLib.Structures;
@@ -53,9 +53,22 @@ public abstract unsafe class ClickBase<TImpl> : IClickable
     /// <returns>Itself.</returns>
     protected TImpl FireCallback(params object[] values)
     {
-        var atkValues = new AtkValueArray(values);
+        using var atkValues = new AtkValueArray(values);
         this.UnitBase->FireCallback((uint)atkValues.Length, atkValues);
-        atkValues.Dispose();
+        
+        return this;
+    }
+
+    /// <summary>
+    /// Fire an addon callback and update visibility.
+    /// </summary>
+    /// <param name="values">AtkValue values.</param>
+    /// <returns>Itself.</returns>
+    protected TImpl FireCallbackWithVisibility(params object[] values)
+    {
+        using var atkValues = new AtkValueArray(values);
+        var fireCallback = (delegate* unmanaged[Stdcall]<AtkUnitBase*, int, AtkValue*, bool, void>)AtkUnitBase.MemberFunctionPointers.FireCallback;
+        fireCallback(this.UnitBase, atkValues.Length, atkValues, true);
 
         return this;
     }
@@ -63,11 +76,11 @@ public abstract unsafe class ClickBase<TImpl> : IClickable
     /// <summary>
     /// Fire an addon callback.
     /// </summary>
-    /// <param name="a4">A parameter.</param>
+    /// <param name="close">A parameter.</param>
     /// <returns>Itself.</returns>
-    protected TImpl FireNullCallback(bool a4)
+    protected TImpl FireNullCallback(bool close)
     {
-        this.UnitBase->FireCallback(0, null, a4);
+        this.UnitBase->FireCallback(0, null, close);
 
         return this;
     }

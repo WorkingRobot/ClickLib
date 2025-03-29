@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 
 using ClickLib.Enums;
@@ -71,7 +71,7 @@ public abstract unsafe partial class ClickBase<TImpl, TStruct> : ClickBase<TImpl
     /// <param name="which">Internal game click routing.</param>
     /// <param name="type">Event type.</param>
     protected void ClickAddonRadioButton(AtkComponentRadioButton* target, uint which, EventType type = EventType.CHANGE)
-        => this.ClickAddonComponent(target->AtkComponentButton.AtkComponentBase.OwnerNode, which, type);
+        => this.ClickAddonComponent(target->AtkComponentButton.OwnerNode, which, type);
 
     /// <summary>
     /// Send a click.
@@ -156,8 +156,7 @@ public abstract unsafe partial class ClickBase<TImpl, TStruct> : ClickBase<TImpl
 
     private ReceiveEventDelegate GetReceiveEvent(AtkEventListener* listener)
     {
-        var receiveEventAddress = new IntPtr(listener->VirtualTable->ReceiveEvent);
-        return Marshal.GetDelegateForFunctionPointer<ReceiveEventDelegate>(receiveEventAddress)!;
+        return Marshal.GetDelegateForFunctionPointer<ReceiveEventDelegate>((nint)listener->VirtualTable->ReceiveEvent)!;
     }
 
     private ReceiveEventDelegate GetReceiveEvent(AtkComponentBase* listener)
