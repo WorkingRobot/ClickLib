@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net9.0-windows7.0": {
+      "DotNet.ReproducibleBuilds": {
+        "type": "Direct",
+        "requested": "[1.2.25, )",
+        "resolved": "1.2.25",
+        "contentHash": "xCXiw7BCxHJ8pF6wPepRUddlh2dlQlbr81gXA72hdk4FLHkKXas7EH/n+fk5UCA/YfMqG1Z6XaPiUjDbUNBUzg=="
+      },
+      "Meziantou.Analyzer": {
+        "type": "Direct",
+        "requested": "[2.0.189, )",
+        "resolved": "2.0.189",
+        "contentHash": "/e+dh95vDdvCTbViV2cWpXJEXAj+VHq7FsBXCTTTsLcffV0bkgXDFAPY0zMpy+Vt91Cl2cBoSOfaAoSdtn796Q=="
+      },
+      "Reloaded.Memory": {
+        "type": "Direct",
+        "requested": "[7.1.0, )",
+        "resolved": "7.1.0",
+        "contentHash": "4Y5tCsRWdW/shj9W7RqJq37LStuW1VVtjxsBp4LKZilPcjudeQg9k+u+6fnDgacCEJiG3S2EtcaiNtVMTdaSnQ=="
+      }
+    }
+  }
+}
